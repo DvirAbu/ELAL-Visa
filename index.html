@@ -1,926 +1,612 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EL AL Travel · ויזות ואשרות כניסה</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Assistant:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<style>
-  :root {
-    /* Color Palette */
-    --navy: #142152;
-    --navy-2: #1e327a;
-    --navy-deep: #0a1128;
-    --orange: #f26021;
-    --orange-soft: #ff7a3d;
-    --orange-gradient: linear-gradient(135deg, #f26021 0%, #ff7a3d 100%);
-    --bg: #f4f7f9;
-    --surface: #ffffff;
-    --line: #e2e8f0;
-    --input-bg: #f8fafc;
-    --ink: #0f172a;
-    --muted: #64748b;
-    
-    /* Variables */
-    --radius: 20px;
-    --radius-sm: 14px;
-    --shadow-lg: 0 20px 40px -10px rgba(20, 33, 82, 0.12);
-    --shadow-md: 0 10px 20px -5px rgba(20, 33, 82, 0.08);
-    --shadow-sm: 0 4px 6px -1px rgba(20, 33, 82, 0.05);
-    --ease: cubic-bezier(0.25, 1, 0.5, 1);
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>אל על ויזות - EL AL VISAS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Heebo', 'sans-serif'],
+                    },
+                    colors: {
+                        elal: {
+                            navy: '#00205b',
+                            blue: '#0072ce',
+                            light: '#e6f2ff'
+                        },
+                        amsalem: {
+                            teal: '#00bce4'
+                        }
+                    },
+                    boxShadow: {
+                        'soft': '0 10px 40px -10px rgba(0,0,0,0.08)',
+                        'glow': '0 0 20px rgba(0, 114, 206, 0.15)'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #f8fafc;
+            color: #334155;
+            -webkit-font-smoothing: antialiased;
+        }
+        
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; }
-  
-  body {
-    font-family: 'Assistant', sans-serif;
-    background: var(--bg);
-    color: var(--ink);
-    line-height: 1.6;
-    -webkit-font-smoothing: antialiased;
-    animation: fadeIn 0.8s var(--ease) forwards;
-  }
+        .gradient-text {
+            background: linear-gradient(to left, #0072ce, #00bce4);
+            -webkit-background-clip: text;
+            color: transparent;
+        }
 
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
+        .tier-bar {
+            transition: width .8s cubic-bezier(.16,1,.3,1);
+        }
 
-  a { color: inherit; text-decoration: none; }
-  img { display: block; max-width: 100%; }
-  ::selection { background: var(--orange); color: #fff; }
-  :focus-visible { outline: 3px solid rgba(242, 96, 33, 0.4); outline-offset: 3px; border-radius: 8px; }
-
-  /* ---------- Legal disclaimer strip ---------- */
-  .legal-strip {
-    background: var(--navy-deep);
-    border-bottom: 2px solid var(--orange);
-    padding: 11px 20px;
-    position: relative;
-    z-index: 80;
-  }
-  .legal-strip .legal-inner {
-    max-width: 1240px; margin: 0 auto;
-    display: flex; align-items: center; justify-content: center; gap: 10px;
-    color: rgba(255, 255, 255, 0.78);
-    font-size: 13.5px; font-weight: 500; line-height: 1.5; text-align: center;
-    letter-spacing: 0.1px;
-  }
-  .legal-strip svg { width: 17px; height: 17px; flex-shrink: 0; color: var(--orange-soft); }
-  @media(max-width: 600px) {
-    .legal-strip { padding: 10px 16px; }
-    .legal-strip .legal-inner { font-size: 12.5px; align-items: flex-start; text-align: start; gap: 8px; }
-    .legal-strip svg { margin-top: 2px; }
-  }
-
-  /* ---------- Header ---------- */
-  header {
-    position: sticky; top: 0; z-index: 60;
-    background: rgba(255, 255, 255, 0.85);
-    backdrop-filter: saturate(180%) blur(16px);
-    -webkit-backdrop-filter: saturate(180%) blur(16px);
-    border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-    transition: all 0.3s var(--ease);
-  }
-  header.scrolled { box-shadow: 0 4px 20px -8px rgba(20, 33, 82, 0.15); background: rgba(255, 255, 255, 0.95); }
-  
-  .nav {
-    max-width: 1240px; margin: 0 auto; height: 76px; padding: 0 32px;
-    display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  }
-  .nav-right { display: flex; align-items: center; gap: 40px; min-width: 0; }
-  
-  /* תפריט ניווט - לוגו הוגדל */
-  .brand img { height: 48px; width: auto; transition: transform 0.3s var(--ease); }
-  .brand:hover img { transform: scale(1.02); }
-  
-  .nav-links { display: flex; list-style: none; gap: 28px; }
-  .nav-links a {
-    font-size: 16px; font-weight: 600; color: var(--navy);
-    position: relative; padding: 6px 0; transition: color 0.2s var(--ease);
-  }
-  .nav-links a::after {
-    content: ""; position: absolute; inset-inline: 0; bottom: -2px; height: 2px;
-    background: var(--orange); transform: scaleX(0); transform-origin: right;
-    transition: transform 0.3s var(--ease); border-radius: 2px;
-  }
-  .nav-links a:hover { color: var(--orange); }
-  .nav-links a:hover::after { transform: scaleX(1); }
-  
-  .nav-left { display: flex; align-items: center; gap: 12px; }
-  .icon-btn {
-    width: 42px; height: 42px; border-radius: 12px; border: none; background: transparent;
-    color: var(--navy); display: grid; place-items: center; cursor: pointer;
-    transition: all 0.2s var(--ease);
-  }
-  .icon-btn:hover { background: #eef2f6; transform: translateY(-1px); }
-  .icon-btn svg { width: 22px; height: 22px; }
-  
-  .lang { font-weight: 700; color: var(--navy); font-size: 15px; cursor: pointer; padding: 8px 12px; border-radius: 10px; transition: background 0.2s; }
-  .lang:hover { background: #eef2f6; }
-  
-  .btn-login {
-    border: 2px solid var(--navy); background: transparent; color: var(--navy);
-    padding: 8px 24px; border-radius: 99px; font-family: inherit; font-weight: 700; font-size: 15px;
-    cursor: pointer; transition: all 0.2s var(--ease);
-  }
-  .btn-login:hover { background: var(--navy); color: #fff; box-shadow: 0 4px 12px rgba(20, 33, 82, 0.2); transform: translateY(-1px); }
-  .burger { display: none; }
-
-  /* ---------- Hero ---------- */
-  .hero {
-    position: relative; overflow: hidden;
-    background: radial-gradient(130% 150% at 80% -10%, var(--navy-2) 0%, var(--navy) 50%, var(--navy-deep) 100%);
-    padding: 100px 24px 160px; text-align: center;
-  }
-  
-  /* Animated Abstract Shapes */
-  .hero-bg-shapes { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 1; }
-  .shape { position: absolute; filter: blur(70px); border-radius: 50%; opacity: 0.5; animation: float 12s infinite alternate ease-in-out; }
-  .shape-1 { width: 50vw; height: 50vw; max-width: 600px; max-height: 600px; background: #2643a3; top: -10%; right: -5%; }
-  .shape-2 { width: 40vw; height: 40vw; max-width: 500px; max-height: 500px; background: #ff7a3d; bottom: -20%; left: 5%; opacity: 0.25; animation-delay: -5s; }
-  @keyframes float {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(40px, 60px) scale(1.05); }
-  }
-
-  .hero-arc { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; opacity: 0.6; z-index: 1; }
-
-  /* תוספת: איור הדרכון המרחף */
-  .floating-passport {
-    position: absolute;
-    top: 50%;
-    inset-inline-start: 10%; /* צד שמאל ב-RTL (ימין במסך) */
-    transform: translateY(-50%) rotate(-15deg);
-    width: 180px;
-    height: auto;
-    z-index: 2;
-    opacity: 0; /* מתחיל שקוף ומופיע עם אנימציה */
-    animation: floatPassport 6s ease-in-out infinite alternate, popIn 1s var(--ease) forwards 0.5s;
-    pointer-events: none; /* כדי שלא יפריע ללחיצות */
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.4));
-  }
-
-  /* גרסה שנייה לדרכון בצד ימין ב-RTL (שמאל במסך) למיקום סימטרי אם תרצה */
-  .floating-passport.secondary {
-      inset-inline-start: auto;
-      inset-inline-end: 10%;
-      transform: translateY(-50%) rotate(15deg);
-      animation: floatPassportAlt 7s ease-in-out infinite alternate, popIn 1s var(--ease) forwards 0.7s;
-      width: 140px; /* קצת קטן יותר */
-      filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3)) blur(1px); /* מטושטש קלות ליצירת עומק */
-  }
-
-  @keyframes floatPassport {
-    0% { transform: translateY(-50%) rotate(-15deg) scale(1); }
-    100% { transform: translateY(-55%) rotate(-10deg) scale(1.05); }
-  }
-  
-  @keyframes floatPassportAlt {
-    0% { transform: translateY(-50%) rotate(15deg) scale(1); }
-    100% { transform: translateY(-40%) rotate(20deg) scale(1.02); }
-  }
-
-  @keyframes popIn {
-      from { opacity: 0; transform: translateY(-30%) rotate(-30deg) scale(0.8); }
-      to { opacity: 0.9; }
-  }
-
-  .hero-inner { max-width: 1180px; margin: 0 auto; width: 100%; position: relative; z-index: 3; animation: slideUp 0.8s var(--ease) forwards; }
-  
-  @keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* עיצוב הדרכונים הסטטיים */
-  .passport-wrapper {
-    position: absolute;
-    top: 50%;
-    z-index: 1;
-    pointer-events: none;
-  }
-  .passport-wrapper.w1 {
-    inset-inline-start: 12%;
-    transform: translateY(-50%) rotate(-12deg);
-  }
-  .passport-wrapper.w2 {
-    inset-inline-end: 12%;
-    transform: translateY(-40%) rotate(16deg);
-  }
-  
-  .static-passport {
-    width: 170px;
-    height: auto;
-    opacity: 0;
-    animation: fadeUpIn 0.8s var(--ease) forwards;
-    filter: drop-shadow(0 20px 30px rgba(0,0,0,0.35));
-  }
-  .w1 .static-passport { animation-delay: 0.3s; }
-  .w2 .static-passport { 
-    animation-delay: 0.5s; 
-    width: 140px; 
-    filter: drop-shadow(0 15px 20px rgba(0,0,0,0.25)) blur(0.5px); 
-  }
-
-  @keyframes fadeUpIn {
-    from { opacity: 0; transform: translateY(30px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* לוגו מרכזי באזור ה-Hero הוגדל משמעותית */
-  .hero-logo { height: 85px; width: auto; margin: 0 auto 32px; opacity: 1; }
-  
-  .hero h1 {
-    color: #fff; font-weight: 800; font-size: clamp(36px, 5vw, 64px); line-height: 1.1;
-    letter-spacing: -0.5px; max-width: 16ch; margin-inline: auto;
-    text-shadow: 0 10px 30px rgba(0,0,0,0.2);
-  }
-  .hero h1 .hl {
-    color: transparent; position: relative; white-space: nowrap;
-    background: linear-gradient(120deg, #fff 0%, #ffd1b3 100%);
-    -webkit-background-clip: text;
-  }
-  .hero p.sub {
-    color: rgba(255, 255, 255, 0.85); font-size: clamp(17px, 2vw, 21px); font-weight: 400;
-    margin: 24px auto 0; max-width: 50ch; line-height: 1.5;
-  }
-  
-  .plane-chip {
-    display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px;
-    padding: 8px 20px; border-radius: 999px;
-    background: rgba(255, 255, 255, 0.12); border: 1px solid rgba(255, 255, 255, 0.2);
-    backdrop-filter: blur(8px);
-    color: #fff; font-size: 14px; font-weight: 600; letter-spacing: 0.3px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  }
-  .plane-chip svg { width: 16px; height: 16px; color: var(--orange-soft); }
-
-  /* ---------- Search widget ---------- */
-  .widget-wrap { max-width: 1040px; margin: -100px auto 0; padding: 0 24px; position: relative; z-index: 20; }
-  .widget {
-    background: var(--surface); border-radius: var(--radius); box-shadow: var(--shadow-lg);
-    overflow: hidden; border: 1px solid rgba(255, 255, 255, 0.8);
-  }
-  
-  .tabs { display: flex; gap: 4px; background: #f1f5f9; padding: 8px; border-radius: var(--radius) var(--radius) 0 0; }
-  .tab {
-    flex: 1; border: none; background: transparent; font-family: inherit;
-    padding: 16px 20px; border-radius: var(--radius-sm); font-weight: 700; font-size: 16px;
-    color: var(--muted); cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 10px;
-    transition: all 0.3s var(--ease);
-  }
-  .tab svg { width: 20px; height: 20px; transition: transform 0.3s var(--ease); }
-  .tab[aria-selected="true"] { background: #fff; color: var(--navy); box-shadow: var(--shadow-sm); }
-  .tab[aria-selected="true"] svg { color: var(--orange); transform: scale(1.1); }
-  .tab:not([aria-selected="true"]):hover { color: var(--navy); background: rgba(255,255,255,0.5); }
-  
-  .widget-body { padding: 36px 40px 44px; }
-  .panel { display: none; animation: fade 0.4s var(--ease); }
-  .panel.active { display: block; }
-  @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
-  
-  .panel-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-bottom: 32px; }
-  .panel-head h3 { font-size: 22px; color: var(--navy); font-weight: 800; letter-spacing: -0.3px; }
-  .panel-head p { font-size: 16px; color: var(--muted); margin-top: 6px; max-width: 65ch; }
-  .head-badge {
-    flex-shrink: 0; width: 56px; height: 56px; border-radius: 16px; display: grid; place-items: center;
-    background: linear-gradient(135deg, #f0f4ff, #ffffff); color: var(--navy); border: 1px solid var(--line);
-    box-shadow: var(--shadow-sm);
-  }
-  .head-badge svg { width: 28px; height: 28px; color: var(--orange); }
-  
-  .form { display: grid; grid-template-columns: 1.5fr 1fr 1fr auto; gap: 20px; align-items: end; }
-  .field { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-  .field--wide { grid-column: span 2; }
-  .field label { font-size: 14px; font-weight: 700; color: var(--navy); margin-inline-start: 4px; }
-  
-  .control {
-    position: relative; background: var(--input-bg);
-    border: 1.5px solid transparent; border-radius: var(--radius-sm);
-    transition: all 0.3s var(--ease); display: flex; align-items: center;
-  }
-  .control:focus-within {
-    background: #fff; border-color: var(--navy);
-    box-shadow: 0 0 0 4px rgba(20, 33, 82, 0.08);
-  }
-  .icon-start {
-    position: absolute; inset-inline-start: 16px; color: var(--muted);
-    display: grid; place-items: center; pointer-events: none;
-    transition: color 0.3s;
-  }
-  .icon-start svg { width: 20px; height: 20px; }
-  .control:focus-within .icon-start { color: var(--navy); }
-  
-  .control input, .control select {
-    width: 100%; border: none; outline: none; background: transparent; font-family: inherit;
-    font-size: 16px; font-weight: 600; color: var(--ink); padding: 14px 16px 14px 44px; cursor: pointer;
-  }
-  /* RTL padding fix for icon */
-  .control.has-icon input, .control.has-icon select { padding-inline-start: 46px; }
-  
-  .control select { appearance: none; }
-  .control .chev { position: absolute; inset-inline-end: 16px; top: 50%; transform: translateY(-50%); pointer-events: none; color: var(--muted); }
-  .control .chev svg { width: 18px; height: 18px; }
-  
-  .btn-submit {
-    background: var(--orange-gradient); color: #fff; border: none; font-family: inherit;
-    padding: 15px 36px; border-radius: var(--radius-sm); font-weight: 800; font-size: 16px; cursor: pointer;
-    display: inline-flex; align-items: center; justify-content: center; gap: 10px; white-space: nowrap;
-    box-shadow: 0 8px 20px -6px rgba(242, 96, 33, 0.5); transition: all 0.3s var(--ease);
-    height: 52px; /* Match input heights roughly */
-  }
-  .btn-submit svg { width: 20px; height: 20px; transition: transform 0.3s var(--ease); }
-  .btn-submit:hover {
-    box-shadow: 0 12px 24px -8px rgba(242, 96, 33, 0.6); transform: translateY(-2px);
-  }
-  .btn-submit:hover svg { transform: translateX(-4px); }
-  .btn-submit:active { transform: translateY(0); box-shadow: 0 4px 10px -4px rgba(242, 96, 33, 0.5); }
-
-  /* ---------- Trust strip ---------- */
-  .trust {
-    max-width: 1000px; margin: 24px auto 0; padding: 0 24px;
-    display: flex; flex-wrap: wrap; justify-content: center; gap: 16px 24px;
-  }
-  .trust span {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(34, 160, 107, 0.08); color: #1a7a51;
-    padding: 8px 18px; border-radius: 999px; font-size: 14.5px; font-weight: 700;
-    border: 1px solid rgba(34, 160, 107, 0.15);
-  }
-  .trust svg { width: 18px; height: 18px; }
-
-  /* ---------- Features ---------- */
-  .features { max-width: 1140px; margin: 0 auto; padding: 100px 24px 60px; }
-  .features h2 { text-align: center; color: var(--navy); font-size: 32px; font-weight: 800; margin-bottom: 12px; letter-spacing: -0.5px; }
-  .features .lead { text-align: center; color: var(--muted); font-size: 18px; margin-bottom: 56px; }
-  
-  .feat-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 24px; }
-  .feat {
-    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius);
-    padding: 32px 20px; text-align: center; cursor: pointer;
-    box-shadow: var(--shadow-sm); transition: all 0.3s var(--ease);
-  }
-  .feat:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
-  
-  .feat .ic {
-    width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px; display: grid; place-items: center;
-    background: #f1f5f9; color: var(--navy); transition: all 0.3s var(--ease);
-  }
-  .feat .ic svg { width: 28px; height: 28px; }
-  .feat:hover .ic { background: var(--orange-gradient); color: #fff; transform: scale(1.05); box-shadow: 0 8px 16px -4px rgba(242, 96, 33, 0.3); }
-  .feat span { font-size: 16px; font-weight: 700; color: var(--navy); display: block; line-height: 1.3; }
-
-  /* ---------- Footer ---------- */
-  footer { background: var(--navy-deep); color: rgba(255, 255, 255, 0.7); margin-top: 60px; border-top: 4px solid var(--orange); }
-  .foot {
-    max-width: 1240px; margin: 0 auto; padding: 60px 32px 40px;
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 40px; align-items: center;
-  }
-  .foot img { height: 34px; opacity: 0.95; }
-  .foot-links { display: flex; flex-wrap: wrap; gap: 28px; font-size: 15px; font-weight: 600; }
-  .foot-links a { transition: color 0.2s var(--ease); }
-  .foot-links a:hover { color: #fff; }
-  .foot-bar {
-    border-top: 1px solid rgba(255, 255, 255, 0.1);
-    max-width: 1240px; margin: 0 auto; padding: 24px 32px;
-    font-size: 14px; color: rgba(255, 255, 255, 0.5); text-align: center;
-  }
-  .foot-legal {
-    max-width: 900px; margin: 0 auto; padding: 0 32px 28px;
-    font-size: 13px; line-height: 1.6; color: rgba(255, 255, 255, 0.42); text-align: center;
-  }
-
-  /* ---------- Floating support ---------- */
-  .support {
-    position: fixed; bottom: 32px; inset-inline-start: 32px; z-index: 70;
-    background: var(--orange-gradient); color: #fff; height: 60px; border-radius: 999px;
-    display: flex; align-items: center; gap: 0; padding: 0 18px; border: none; cursor: pointer;
-    box-shadow: 0 12px 30px -8px rgba(242, 96, 33, 0.6); font-family: inherit;
-    transition: all 0.3s var(--ease); overflow: hidden;
-  }
-  .support svg { width: 26px; height: 26px; flex-shrink: 0; }
-  .support .txt { max-width: 0; opacity: 0; font-weight: 700; font-size: 16px; white-space: nowrap; transition: all 0.4s var(--ease); }
-  .support:hover { padding-inline-end: 24px; transform: translateY(-2px); box-shadow: 0 16px 36px -8px rgba(242, 96, 33, 0.7); }
-  .support:hover .txt { max-width: 180px; opacity: 1; margin-inline-start: 12px; }
-
-  /* ---------- Submission modal ---------- */
-  .modal-overlay {
-    position: fixed; inset: 0; z-index: 90; display: grid; place-items: center; padding: 24px;
-    background: rgba(10, 17, 40, 0.6); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
-    opacity: 0; animation: overlayIn 0.3s var(--ease) forwards;
-  }
-  .modal-overlay[hidden] { display: none; }
-  @keyframes overlayIn { to { opacity: 1; } }
-  
-  .modal-card {
-    position: relative; background: #fff; border-radius: 24px; max-width: 460px; width: 100%;
-    padding: 48px 40px 40px; text-align: center; box-shadow: 0 40px 90px -24px rgba(10, 17, 40, 0.6);
-    transform: translateY(20px) scale(0.95); animation: cardIn 0.4s var(--ease) 0.05s forwards;
-  }
-  @keyframes cardIn { to { transform: none; } }
-  
-  .modal-close {
-    position: absolute; inset-inline-end: 20px; top: 20px; width: 40px; height: 40px; border: none;
-    background: #f1f5f9; color: var(--muted); border-radius: 12px; cursor: pointer; display: grid; place-items: center;
-    transition: all 0.2s var(--ease);
-  }
-  .modal-close:hover { background: #e2e8f0; color: var(--ink); transform: rotate(90deg); }
-  .modal-close svg { width: 20px; height: 20px; }
-  
-  .modal-check {
-    width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 24px; display: grid; place-items: center;
-    background: radial-gradient(closest-side, #e8f7ef, #d6f0e0); color: #1f9d57;
-    box-shadow: 0 0 0 10px rgba(34, 160, 107, 0.08);
-  }
-  .modal-check svg { width: 40px; height: 40px; }
-  .modal-card h3 { color: var(--navy); font-size: 26px; font-weight: 800; line-height: 1.2; }
-  .modal-text { color: var(--muted); font-size: 16px; margin: 12px auto 32px; max-width: 36ch; line-height: 1.6; }
-  .modal-text b { color: var(--navy); font-weight: 700; }
-  .modal-actions { display: flex; flex-direction: column; gap: 12px; }
-  .modal-cta { justify-content: center; width: 100%; }
-  
-  .btn-ghost {
-    background: transparent; border: none; color: var(--muted); font-family: inherit;
-    font-size: 15px; font-weight: 700; padding: 12px; cursor: pointer; border-radius: 12px; transition: all 0.2s var(--ease);
-  }
-  .btn-ghost:hover { color: var(--navy); background: #f8fafc; }
-
-  /* ---------- Responsive ---------- */
-  @media(max-width: 1024px) {
-    .form { grid-template-columns: 1fr 1fr; gap: 20px; }
-    .btn-submit { grid-column: 1 / -1; justify-content: center; margin-top: 8px; }
-    .feat-grid { grid-template-columns: repeat(3, 1fr); }
-    .passport-wrapper { display: none; }
-  }
-  @media(max-width: 768px) {
-    .nav { padding: 0 20px; }
-    .nav-links, .nav-left .lang, .nav-left .btn-login { display: none; }
-    .burger { display: grid; }
-    .hero { padding: 80px 20px 140px; }
-    .widget-body { padding: 28px 24px 32px; }
-    .panel-head .head-badge { display: none; }
-    .tab span { display: none; }
-    .form { grid-template-columns: 1fr; gap: 16px; }
-    .feat-grid { grid-template-columns: 1fr 1fr; gap: 16px; }
-    .foot { justify-content: center; text-align: center; gap: 30px; }
-    .foot-links { justify-content: center; }
-  }
-  @media(max-width: 480px) {
-    .feat-grid { grid-template-columns: 1fr; }
-    .trust { flex-direction: column; align-items: center; }
-    .modal-card { padding: 40px 24px 32px; }
-  }
-  @media(prefers-reduced-motion: reduce) {
-    * { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
-  }
-</style>
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: .01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: .01ms !important;
+            }
+        }
+    </style>
 </head>
-<body>
+<body class="antialiased selection:bg-elal-blue selection:text-white">
 
-<!-- ============ LEGAL DISCLAIMER ============ -->
-<div class="legal-strip" role="note" aria-label="הבהרה משפטית">
-  <div class="legal-inner">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
-    <span>השימוש בשם ובלוגו של אל על נעשה לצורכי המחשה בלבד ובמסגרת מצגת זו בלבד ואינו מהווה אישור לשימוש מסחרי או לכל מטרה אחרת</span>
-  </div>
-</div>
-
-<!-- ============ HEADER ============ -->
-<header id="hdr">
-  <div class="nav">
-    <div class="nav-right">
-      <a class="brand" href="javascript:void(0)" aria-label="EL AL Travel">
-        <img src="data:image/png;base64,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" alt="EL AL Travel">
-      </a>
-      <nav aria-label="ניווט ראשי">
-        <ul class="nav-links">
-          <li><a href="javascript:void(0)">לתכנן</a></li>
-          <li><a href="javascript:void(0)">להזמין</a></li>
-          <li><a href="javascript:void(0)">לטוס</a></li>
-          <li><a href="javascript:void(0)">EL AL Travel</a></li>
-          <li><a href="javascript:void(0)">מועדון הנוסע המתמיד</a></li>
-        </ul>
-      </nav>
-    </div>
-    <div class="nav-left">
-      <button type="button" class="icon-btn" aria-label="נגישות">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="4" r="2"/><path d="M5 7h14M12 9v5m0 0l-3 6m3-6l3 6"/></svg>
-      </button>
-      <button type="button" class="icon-btn" aria-label="חיפוש">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
-      </button>
-      <span class="lang">EN</span>
-      <button type="button" class="btn-login">התחברות</button>
-      <button type="button" class="icon-btn burger" aria-label="תפריט">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
-      </button>
-    </div>
-  </div>
-</header>
-
-<!-- ============ HERO ============ -->
-<section class="hero">
-  <div class="hero-bg-shapes">
-    <div class="shape shape-1"></div>
-    <div class="shape shape-2"></div>
-  </div>
-  
-  <svg class="hero-arc" viewBox="0 0 1200 400" fill="none" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
-    <path d="M-50 360 C 300 120, 700 120, 1250 300" stroke="rgba(255,255,255,.16)" stroke-width="1.5" stroke-dasharray="6 9"/>
-    <path d="M-50 410 C 350 200, 760 200, 1250 360" stroke="rgba(242,96,33,.3)" stroke-width="1.5" stroke-dasharray="6 9"/>
-    <circle cx="1000" cy="135" r="2.5" fill="rgba(255,255,255,.6)"/>
-    <circle cx="180" cy="300" r="2" fill="rgba(255,255,255,.5)"/>
-  </svg>
-  
-  <!-- דרכון ימני (W1 - כחול) -->
-  <div class="passport-wrapper w1">
-    <svg class="static-passport" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="200" height="280" rx="16" fill="url(#p1-grad)" />
-      <rect x="0" y="0" width="16" height="280" rx="0" fill="#ffffff" opacity="0.08"/>
-      <line x1="10" y1="10" x2="10" y2="270" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.2"/>
-      <circle cx="108" cy="110" r="32" fill="none" stroke="#eab308" stroke-width="2"/>
-      <circle cx="108" cy="110" r="24" fill="none" stroke="#eab308" stroke-width="1.5" stroke-dasharray="3 3"/>
-      <path d="M108 85 L108 135 M83 110 L133 110" stroke="#eab308" stroke-width="2"/>
-      <rect x="73" y="180" width="70" height="8" rx="4" fill="#eab308" opacity="0.9"/>
-      <rect x="88" y="200" width="40" height="5" rx="2.5" fill="#eab308" opacity="0.6"/>
-      <defs>
-        <linearGradient id="p1-grad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#1e327a"/>
-          <stop offset="100%" stop-color="#0a1128"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-
-  <!-- דרכון שמאלי (W2 - בורדו) -->
-  <div class="passport-wrapper w2">
-    <svg class="static-passport" viewBox="0 0 200 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="0" y="0" width="200" height="280" rx="16" fill="url(#p2-grad)" />
-      <rect x="0" y="0" width="16" height="280" rx="0" fill="#ffffff" opacity="0.1"/>
-      <line x1="10" y1="10" x2="10" y2="270" stroke="#ffffff" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.25"/>
-      <circle cx="108" cy="110" r="32" fill="none" stroke="#fcd34d" stroke-width="2"/>
-      <path d="M90 95 L126 125 M90 125 L126 95" stroke="#fcd34d" stroke-width="2"/>
-      <rect x="68" y="180" width="80" height="8" rx="4" fill="#fcd34d" opacity="0.9"/>
-      <rect x="83" y="200" width="50" height="5" rx="2.5" fill="#fcd34d" opacity="0.6"/>
-      <defs>
-        <linearGradient id="p2-grad" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stop-color="#991b1b"/>
-          <stop offset="100%" stop-color="#450a0a"/>
-        </linearGradient>
-      </defs>
-    </svg>
-  </div>
-
-  <div class="hero-inner">
-    <img class="hero-logo" src="data:image/png;base64,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" alt="EL AL Travel">
-    <div class="plane-chip">
-      <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.5 13.5 11V4.2a1.7 1.7 0 0 0-3.4 0V11L1.6 16.5v2.1l8.5-2.5v4l-2.3 1.7v1.4l3.7-1 3.7 1v-1.4L13 20.1v-4l9 2.5z"/></svg>
-      שירות הויזות הרשמי של אל על
-    </div>
-    <h1>מהיום, מוציאים<br><span class="hl">ויזה בקליק</span> עם אל על!</h1>
-    <p class="sub">תהליך דיגיטלי פשוט ומאובטח לכל אשרות הכניסה, עם הליווי והניסיון של מומחי אל על.</p>
-  </div>
-</section>
-
-<!-- ============ SEARCH WIDGET ============ -->
-<div class="widget-wrap">
-  <div class="widget">
-    <div class="tabs" role="tablist" aria-label="סוג שירות">
-      <button type="button" class="tab" role="tab" aria-selected="true" aria-controls="p-visa" id="t-visa">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h4M8 13h8M8 17h6"/><circle cx="16.5" cy="9" r="1.5"/></svg>
-        <span>הוצאת ויזה</span>
-      </button>
-      <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="p-flight" id="t-flight" tabindex="-1">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.5 13.5 11V4.2a1.7 1.7 0 0 0-3.4 0V11L1.6 16.5v2.1l8.5-2.5v4l-2.3 1.7v1.4l3.7-1 3.7 1v-1.4L13 20.1v-4l9 2.5z"/></svg>
-        <span>הזמנת טיסה</span>
-      </button>
-      <button type="button" class="tab" role="tab" aria-selected="false" aria-controls="p-hotel" id="t-hotel" tabindex="-1">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5M7 11h.01M12 11h.01M17 11h.01"/></svg>
-        <span>הזמנת מלון</span>
-      </button>
-    </div>
-
-    <div class="widget-body">
-      <!-- Visa panel -->
-      <div class="panel active" id="p-visa" role="tabpanel" aria-labelledby="t-visa">
-        <div class="panel-head">
-          <div>
-            <h3>EL AL Travel — הדרך המהירה והבטוחה לויזה שלכם</h3>
-            <p>חברי מועדון הנוסע המתמיד נהנים מתהליך קל ומהיר, וצוברים נקודות גם בהנפקת אשרות כניסה.</p>
-          </div>
-          <div class="head-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h4M8 13h8M8 17h6"/><circle cx="16.5" cy="9" r="1.5"/></svg>
-          </div>
+    <header class="sticky top-0 z-50 glass-panel shadow-sm border-b border-slate-200 h-24 flex items-center justify-start px-6 md:px-12">
+        <div class="flex items-center gap-6">
+            <img src="ויזה לוגו סופי (14).jpg" alt="לוגו אמסלם ויזות" class="h-16 mix-blend-multiply">
+            <div class="w-px h-12 bg-slate-300"></div>
+            <img src="Amsalem_Logo.png (2).png" alt="לוגו קבוצת אמסלם" class="h-12 mix-blend-multiply opacity-90">
         </div>
-        <div class="form">
-          <div class="field field--wide">
-            <label for="dest">לאיזו מדינה טסים?</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg></span>
-              <select id="dest">
-                <option>ארצות הברית</option>
-                <option>בריטניה</option>
-                <option>אוסטרליה</option>
-                <option>הודו</option>
-                <option>קנדה</option>
-                <option>איחוד האמירויות</option>
-              </select>
-              <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-            </div>
-          </div>
-          <div class="field">
-            <label for="pass">סוג דרכון</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"/></svg></span>
-              <select id="pass">
-                <option>דרכון ישראלי</option>
-                <option>דרכון זר</option>
-                <option>תעודת מעבר</option>
-              </select>
-              <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-            </div>
-          </div>
-          <button type="button" class="btn-submit">
-            הגשת בקשה
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          </button>
+    </header>
+
+    <div class="bg-slate-100 border-b border-slate-200">
+        <div class="max-w-5xl mx-auto px-6 py-3 flex items-start gap-3">
+            <svg class="w-4 h-4 shrink-0 mt-0.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+            <p class="text-xs text-slate-500 leading-relaxed">
+                השימוש בשם ובלוגו של אל על נעשה לצורכי המחשה בלבד ובמסגרת מצגת זו בלבד, ואינו מהווה אישור לשימוש מסחרי או לכל מטרה אחרת.
+            </p>
         </div>
-      </div>
+    </div>
 
-      <!-- Flight panel -->
-      <div class="panel" id="p-flight" role="tabpanel" aria-labelledby="t-flight" hidden>
-        <div class="panel-head">
-          <div>
-            <h3>הזמנת טיסה — תכננו את הנסיעה הבאה שלכם</h3>
-            <p>בחרו יעד ותאריכים, וצברו נקודות מועדון על כל טיסה עם אל על.</p>
-          </div>
-          <div class="head-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 16.5 13.5 11V4.2a1.7 1.7 0 0 0-3.4 0V11L1.6 16.5v2.1l8.5-2.5v4l-2.3 1.7v1.4l3.7-1 3.7 1v-1.4L13 20.1v-4l9 2.5z"/></svg>
-          </div>
+    <section class="relative bg-elal-navy overflow-hidden">
+        <div class="absolute inset-0 opacity-20 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] mix-blend-overlay"></div>
+        <div class="absolute -right-40 -top-40 w-96 h-96 bg-elal-blue rounded-full mix-blend-multiply filter blur-3xl opacity-50"></div>
+        <div class="absolute -left-40 -bottom-40 w-96 h-96 bg-amsalem-teal rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+        
+        <div class="relative max-w-5xl mx-auto px-6 py-24 text-center">
+            <div class="inline-flex items-center gap-3 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-white text-sm font-medium mb-8 backdrop-blur-md">
+                <span class="w-2 h-2 rounded-full bg-amsalem-teal animate-pulse"></span>
+                שיתוף פעולה חדש
+            </div>
+            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 tracking-tight">
+                EL AL <span class="text-transparent bg-clip-text bg-gradient-to-l from-white to-amsalem-teal">VISAS</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-elal-light font-light max-w-3xl mx-auto mb-10 leading-relaxed">
+                אל על מביאה את המותג והלקוחות, אמסלם מביאה את הידע והתשתית. 
+                <strong class="text-white font-semibold">יחד מעניקים לנוסע מעטפת מלאה מהזמנת הטיסה ועד הכניסה ליעד.</strong>
+            </p>
         </div>
-        <div class="form">
-          <div class="field">
-            <label for="from">מאיפה</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.5 13.5 11V4.2a1.7 1.7 0 0 0-3.4 0V11L1.6 16.5v2.1l8.5-2.5v4l-2.3 1.7v1.4l3.7-1 3.7 1v-1.4L13 20.1v-4l9 2.5z"/></svg></span>
-              <input id="from" type="text" value="תל אביב (TLV)">
+    </section>
+
+    <section class="py-20 relative z-10 -mt-10">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="bg-white rounded-3xl shadow-soft p-10 md:p-14 border border-slate-100">
+                <div class="flex flex-col md:flex-row gap-12 items-start">
+                    <div class="flex-1 space-y-6">
+                        <div class="inline-block border-b-4 border-elal-blue pb-2 mb-4">
+                            <h2 class="text-3xl font-bold text-elal-navy">הרעיון</h2>
+                        </div>
+                        <p class="text-lg text-slate-600 leading-relaxed">
+                            אל על פועלת בשנים האחרונות להרחבת מערכת היחסים עם לקוחותיה מעבר לרכישת כרטיס הטיסה בלבד. 
+                            השקת שירות <strong class="text-elal-navy">אל על מלונות</strong> היא דוגמה ברורה לכך: אל על מציעה ללקוחותיה פתרון נוסף כחלק מחוויית הנסיעה, מחזקת את מועדון הנוסע המתמיד ומייצרת מקור הכנסה משלים.
+                        </p>
+                        <p class="text-lg text-slate-600 leading-relaxed">
+                            אנו מציעים שהשלב הבא בהתפתחות זו יהיה <strong class="text-elal-navy">אל על ויזות</strong>: 
+                            שירות ממותג של אל על, המופעל מקצועית על ידי מחלקת הויזות של קבוצת אמסלם.
+                        </p>
+                        <div class="bg-white p-8 rounded-2xl shadow-soft border border-slate-100 relative overflow-hidden group hover:shadow-lg transition-all duration-300">
+                            <div class="absolute top-0 right-0 w-2 h-full bg-elal-blue group-hover:bg-amsalem-teal transition-colors"></div>
+                            <h3 class="text-2xl font-bold text-elal-navy mb-4">ההצעה שלנו</h3>
+                            <p class="text-lg text-slate-600 leading-relaxed">
+                                נוסעים רבים מגלים שחסרה להם אשרת כניסה רק בשלב הצ׳ק-אין או בשדה התעופה. אל על ויזות נותנת להם כתובת מקצועית אחת, מוקדם יותר במסע:
+                                כלל השירותים הנדרשים לקראת הנסיעה במקום אחד, עם מענה בשעות הפעילות באמצעות מחלקת הויזות של אמסלם ומחוצה להן באמצעות מוקד 24/7.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-          <div class="field">
-            <label for="to">לאן</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h20M15 5l7 7-7 7"/></svg></span>
-              <input id="to" type="text" placeholder="בחרו יעד" value="ניו יורק (JFK)">
-            </div>
-          </div>
-          <div class="field">
-            <label for="when">תאריך יציאה</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-              <input id="when" type="text" placeholder="בחרו תאריך" value="12.07.2026">
-            </div>
-          </div>
-          <button type="button" class="btn-submit">
-            חיפוש טיסות
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          </button>
         </div>
-      </div>
+    </section>
 
-      <!-- Hotel panel -->
-      <div class="panel" id="p-hotel" role="tabpanel" aria-labelledby="t-hotel" hidden>
-        <div class="panel-head">
-          <div>
-            <h3>הזמנת מלון — לישון רגוע ביעד</h3>
-            <p>אלפי בתי מלון ברחבי העולם, במחירים מיוחדים לחברי המועדון.</p>
-          </div>
-          <div class="head-badge" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21V7l9-4 9 4v14M3 21h18M9 21v-5h6v5"/></svg>
-          </div>
+    <section class="py-20 bg-elal-navy text-white relative overflow-hidden">
+        <div class="absolute right-0 top-0 w-1/2 h-full bg-elal-blue opacity-10" style="clip-path: polygon(100% 0, 100% 100%, 0 100%);"></div>
+        <div class="max-w-6xl mx-auto px-6 relative z-10">
+            
+            <div class="mb-14 max-w-3xl">
+                <h2 class="text-3xl font-bold mb-4 border-b-2 border-amsalem-teal inline-block pb-2">למה קבוצת אמסלם?</h2>
+                <p class="text-lg text-elal-light leading-relaxed mt-4">
+                    מחלקת הויזות של קבוצת אמסלם היא הכלי המדויק והמוכן ביותר (Plug & Play) לניהול אופרציה שכזו. היא כבר פועלת כמערך מקצועי ומנוסה להנפקת ויזות ליעדים ברחבי העולם, עם טכנולוגיה, כוח אדם ותהליכי עבודה מוכנים לשילוב מיידי.
+                </p>
+            </div>
+
+            <!-- הגריד פוצל ל-5 קוביות כפי שביקשת -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- קוביה 1: ניסיון ותשתיות -->
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/15 transition">
+                    <h3 class="text-amsalem-teal font-bold text-lg mb-3">תשתיות קיימות</h3>
+                    <p class="text-sm text-slate-300">מחלקת ויזות פעילה ומיומנת עם תהליכי עבודה קיימים. פעילות רשמית כספק הויזות של ה-ALP.</p>
+                </div>
+                <!-- קוביה 2: זמינות -->
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/15 transition">
+                    <h3 class="text-amsalem-teal font-bold text-lg mb-3 flex items-center gap-2">
+                        <span class="relative flex h-3 w-3">
+                            <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amsalem-teal opacity-75"></span>
+                            <span class="relative inline-flex rounded-full h-3 w-3 bg-amsalem-teal"></span>
+                        </span>
+                        מעטפת וזמינות 24/7
+                    </h3>
+                    <p class="text-sm text-slate-300">מוקד חירום ותמיכה פעיל מסביב לשעון, המעניק פתרונות מיידיים לנוסעים שנתקעו בשדה התעופה ללא אישור.</p>
+                </div>
+                <!-- קוביה 3: טכנולוגיה -->
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/15 transition">
+                    <h3 class="text-amsalem-teal font-bold text-lg mb-3">כלים דיגיטליים</h3>
+                    <p class="text-sm text-slate-300">אתר ייעודי המאפשר הנפקת ויזות בטפסים חכמים מבוססי AI ומערכת דוחות מתקדמת למדידת פעילות.</p>
+                </div>
+                <!-- קוביה 4: מעטפת רחבה -->
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/15 transition">
+                    <h3 class="text-amsalem-teal font-bold text-lg mb-3">יכולת טיפול גלובלית</h3>
+                    <p class="text-sm text-slate-300">טיפול בלקוחות פרטיים, מקרים דחופים, ויזות קונסולריות ואשרות אלקטרוניות (eTA) לכל היעדים.</p>
+                </div>
+                <!-- קוביה 5: יציאה לדרך -->
+                <div class="bg-white/10 backdrop-blur-sm p-6 rounded-xl border border-white/10 hover:bg-white/15 transition md:col-span-2">
+                    <h3 class="text-white font-bold text-lg mb-3">מוכנות מיידית (Plug & Play)</h3>
+                    <p class="text-sm text-slate-300">ללא חבלי לידה או צורך בהקמת מערך. היכולת לצאת לדרך במהירות רבה ולחבר את השירות אל מול מערכות ונקודות המגע של אל על במסע הלקוח בצורה חלקה ופשוטה.</p>
+                </div>
+            </div>
         </div>
-        <div class="form">
-          <div class="field">
-            <label for="city">עיר היעד</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span>
-              <input id="city" type="text" placeholder="לאן נוסעים?" value="לונדון">
+    </section>
+
+    <section class="py-20 bg-slate-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="text-3xl font-bold text-elal-navy text-center mb-12">שילוב במסע הלקוח</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4 text-sm font-medium">
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center border border-slate-100 text-elal-navy hover:shadow-md transition">אישור הזמנה</div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center border border-slate-100 text-elal-navy hover:shadow-md transition">ניהול ההזמנה</div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center border border-slate-100 text-elal-navy hover:shadow-md transition">אתר ואפליקציית אל על</div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center border border-slate-100 text-elal-navy hover:shadow-md transition">דלפקי הצ׳ק-אין בשדה התעופה</div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center border border-slate-100 text-elal-navy hover:shadow-md transition">מוקדי שירות ומכירות</div>
+                <div class="bg-white p-4 rounded-xl shadow-sm text-center border border-slate-100 text-elal-navy border-b-2 border-b-amsalem-teal hover:shadow-md transition">פנייה יזומה לפי יעד</div>
             </div>
-          </div>
-          <div class="field">
-            <label for="checkin">צ׳ק־אין</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-              <input id="checkin" type="text" value="12.07.2026">
-            </div>
-          </div>
-          <div class="field">
-            <label for="guests">אורחים</label>
-            <div class="control has-icon">
-              <span class="icon-start"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></span>
-              <select id="guests"><option>2 מבוגרים</option><option>1 מבוגר</option><option>2 מבוגרים + ילד</option></select>
-              <span class="chev"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></span>
-            </div>
-          </div>
-          <button type="button" class="btn-submit">
-            חיפוש מלונות
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-          </button>
         </div>
-      </div>
-    </div>
-  </div>
+    </section>
 
-  <!-- Trust strip -->
-  <div class="trust">
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> תהליך מאובטח לחלוטין</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> מומחי ויזות זמינים 24/7</span>
-    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg> צבירת נקודות מועדון</span>
-  </div>
-</div>
+    <!-- ============================================================
+         עקרונות מסחריים
+    ============================================================= -->
+    <section id="commercial" class="py-20 bg-white border-y border-slate-100">
+        <div class="max-w-6xl mx-auto px-6">
 
-<!-- ============ FEATURES ============ -->
-<section class="features">
-  <h2>הכול במקום אחד</h2>
-  <p class="lead">מהבדיקה הראשונה ועד קבלת האשרה — אל על איתכם בכל שלב.</p>
-  <div class="feat-grid">
-    <div class="feat" tabindex="0">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M8 9h4M8 13h8M8 17h6"/><circle cx="16.5" cy="9" r="1.5"/></svg></div>
-      <span>הכירו את שירות הויזות</span>
-    </div>
-    <div class="feat" tabindex="0">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
-      <span>הטבות לחברי מועדון</span>
-    </div>
-    <div class="feat" tabindex="0">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg></div>
-      <span>שאלות ותשובות נפוצות</span>
-    </div>
-    <div class="feat" tabindex="0">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-1v-6h3M4 13H1v4a2 2 0 0 0 2 2h1"/></svg></div>
-      <span>יצירת קשר עם מומחה</span>
-    </div>
-    <div class="feat" tabindex="0">
-      <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M11 18h2"/></svg></div>
-      <span>מעקב אחר סטטוס בקשה</span>
-    </div>
-  </div>
-</section>
+            <div class="text-center mb-16">
+                <div class="flex items-center justify-center gap-4 mb-4">
+                    <div class="h-px bg-amsalem-teal w-12"></div>
+                    <span class="text-amsalem-teal font-bold tracking-widest text-sm uppercase">המסגרת העסקית</span>
+                    <div class="h-px bg-amsalem-teal w-12"></div>
+                </div>
+                <h2 class="text-4xl font-extrabold text-elal-navy mb-4">עקרונות מסחריים</h2>
+                <p class="text-lg text-slate-600 max-w-3xl mx-auto leading-relaxed">
+                    המסגרת המסחרית לשיתוף הפעולה בין אל על לבין אמסלם תיירות ונופש: תמחור אחיד ללקוח, עמלה מדורגת לאל על, סליקה דרך מערך אל על והתחשבנות רבעונית.
+                </p>
+            </div>
 
-<!-- ============ FOOTER ============ -->
-<footer>
-  <div class="foot">
-    <img src="data:image/png;base64,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" alt="EL AL Travel">
-    <nav class="foot-links" aria-label="ניווט תחתון">
-      <a href="javascript:void(0)">שירות הויזות</a>
-      <a href="javascript:void(0)">מועדון הנוסע המתמיד</a>
-      <a href="javascript:void(0)">שאלות נפוצות</a>
-      <a href="javascript:void(0)">תקנון ופרטיות</a>
-      <a href="javascript:void(0)">יצירת קשר</a>
-    </nav>
-  </div>
-  <p class="foot-legal">השימוש בשם ובלוגו של אל על נעשה לצורכי המחשה בלבד ובמסגרת מצגת זו בלבד ואינו מהווה אישור לשימוש מסחרי או לכל מטרה אחרת</p>
-  <div class="foot-bar">© 2026 EL AL Travel · עמוד הדמיה לצורכי המחשה בלבד · אינו אתר רשמי</div>
-</footer>
+            <!-- 1. תמחור השירות ללקוח -->
+            <div class="mb-16">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="w-10 h-10 shrink-0 rounded-xl bg-elal-navy text-white font-bold flex items-center justify-center">1</span>
+                    <h3 class="text-2xl font-bold text-elal-navy">תמחור השירות ללקוח</h3>
+                </div>
 
-<!-- ============ SUPPORT ============ -->
-<button type="button" class="support" aria-label="צ׳אט עם מומחה">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12a8 8 0 0 1 16 0v5a2 2 0 0 1-2 2h-1v-6h3M4 13H1v4a2 2 0 0 0 2 2h1"/></svg>
-  <span class="txt">דברו עם מומחה</span>
-</button>
+                <div class="grid md:grid-cols-5 gap-6">
 
-<!-- ============ SUBMISSION MODAL ============ -->
-<div class="modal-overlay" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
-  <div class="modal-card">
-    <button type="button" class="modal-close" id="modal-close" aria-label="סגירה">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg>
-    </button>
-    <div class="modal-check" aria-hidden="true">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
-    </div>
-    <h3 id="modal-title"></h3>
-    <p class="modal-text" id="modal-text"></p>
-    <div class="modal-actions">
-      <button type="button" class="btn-submit modal-cta" id="modal-cta"></button>
-      <button type="button" class="btn-ghost" id="modal-dismiss">סגירה</button>
-    </div>
-  </div>
-</div>
+                    <!-- נוסחת המחיר -->
+                    <div class="md:col-span-3 relative overflow-hidden rounded-2xl bg-elal-navy p-8 md:p-10 text-white">
+                        <div class="absolute -left-24 -bottom-24 w-72 h-72 bg-amsalem-teal rounded-full mix-blend-multiply filter blur-3xl opacity-30"></div>
+                        <div class="relative z-10">
+                            <span class="text-xs font-bold tracking-widest uppercase text-amsalem-teal">נוסחת המחיר הסופי ללקוח</span>
 
-<script>
-  // Sticky header shadow
-  const hdr = document.getElementById('hdr');
-  const onScroll = () => hdr.classList.toggle('scrolled', window.scrollY > 10);
-  addEventListener('scroll', onScroll, { passive: true });
-  onScroll();
+                            <div class="mt-6 flex flex-wrap items-center gap-3 text-lg md:text-xl font-medium" dir="rtl">
+                                <span class="px-4 py-3 rounded-xl bg-white/10 border border-white/15">אגרת מדינת היעד</span>
+                                <span class="text-amsalem-teal font-bold text-2xl">×</span>
+                                <span class="px-4 py-3 rounded-xl bg-white/10 border border-white/15">1.06</span>
+                                <span class="text-amsalem-teal font-bold text-2xl">+</span>
+                                <span class="px-4 py-3 rounded-xl bg-amsalem-teal/20 border border-amsalem-teal/40">דמי טיפול</span>
+                            </div>
 
-  // Tabs
-  const tabs = [...document.querySelectorAll('.tab')];
-  const panels = {'t-visa':'p-visa','t-flight':'p-flight','t-hotel':'p-hotel'};
-  function select(tab) {
-    tabs.forEach(t => {
-      const on = t === tab;
-      t.setAttribute('aria-selected', on);
-      t.tabIndex = on ? 0 : -1;
-      const p = document.getElementById(panels[t.id]);
-      p.classList.toggle('active', on);
-      p.hidden = !on;
-    });
-    tab.focus();
-  }
-  tabs.forEach((t, i) => {
-    t.addEventListener('click', () => select(t));
-    t.addEventListener('keydown', e => {
-      // RTL: ArrowLeft -> next, ArrowRight -> prev
-      if (e.key === 'ArrowLeft') { e.preventDefault(); select(tabs[(i+1) % tabs.length]); }
-      if (e.key === 'ArrowRight') { e.preventDefault(); select(tabs[(i-1+tabs.length) % tabs.length]); }
-    });
-  });
+                            <div class="mt-8 pt-6 border-t border-white/15 grid sm:grid-cols-2 gap-6 text-sm">
+                                <div>
+                                    <div class="text-amsalem-teal font-bold mb-1">מחיר אחד, שקוף</div>
+                                    <p class="text-slate-300 leading-relaxed">ללקוח מוצג מחיר סופי, אחיד וכולל. רכיבי התמורה של אמסלם ושל אל על אינם מוצגים בנפרד.</p>
+                                </div>
+                                <div>
+                                    <div class="text-amsalem-teal font-bold mb-1">אישור מחירון</div>
+                                    <p class="text-slate-300 leading-relaxed">אמסלם תגבש את מחירון שירותי הויזה המלא, שייכנס לתוקף רק לאחר אישור אל על.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-  // Submission flow
-  const modal = document.getElementById('modal');
-  const mTitle = document.getElementById('modal-title');
-  const mText = document.getElementById('modal-text');
-  const mCta = document.getElementById('modal-cta');
-  let lastFocus = null;
-  const val = id => { const el = document.getElementById(id); return el ? el.value.trim() : ''; };
+                    <!-- דמי הטיפול -->
+                    <div class="md:col-span-2 rounded-2xl bg-slate-50 border border-slate-100 p-8 md:p-10 flex flex-col">
+                        <span class="text-xs font-bold tracking-widest uppercase text-slate-400">דמי הטיפול</span>
+                        <p class="text-sm text-slate-600 leading-relaxed mt-3 mb-8">
+                            גובה דמי הטיפול נקבע לפי מורכבות הליך הוצאת הויזה: ככל שההליך מורכב ודורש טיפול נרחב יותר, כך דמי הטיפול גבוהים יותר.
+                        </p>
 
-  function buildContent() {
-    const active = document.querySelector('.panel.active').id;
-    if (active === 'p-flight') {
-      return {
-        load: 'מחפש טיסות…',
-        title: 'מצאנו עבורכם טיסות',
-        text: `טיסות מ<b>${val('from')}</b> ל<b>${val('to')}</b> בתאריך <b>${val('when')}</b>.`,
-        cta: 'צפייה בטיסות'
-      };
-    }
-    if (active === 'p-hotel') {
-      return {
-        load: 'מחפש מלונות…',
-        title: 'מצאנו מלונות פנויים',
-        text: `מלונות ב<b>${val('city')}</b> החל מ־<b>${val('checkin')}</b> עבור <b>${val('guests')}</b>.`,
-        cta: 'צפייה במלונות'
-      };
-    }
-    return {
-      load: 'שולח בקשה…',
-      title: 'הבקשה הוגשה בהצלחה',
-      text: `בקשת האשרה עבור <b>${val('dest')}</b> עם <b>${val('pass')}</b> התקבלה. נציג מ־EL AL Travel יחזור אליכם בהקדם.`,
-      cta: 'מעקב אחר הבקשה'
-    };
-  }
+                        <div class="space-y-3 mt-auto">
+                            <div class="bg-white rounded-xl border border-slate-100 p-5">
+                                <div class="flex items-baseline justify-between gap-4 mb-3">
+                                    <div class="font-bold text-elal-navy">הליך פשוט</div>
+                                    <div class="text-3xl font-extrabold text-elal-blue">$25</div>
+                                </div>
+                                <div class="h-1.5 rounded-full bg-slate-100">
+                                    <div class="h-full rounded-full bg-elal-blue" style="width:29%"></div>
+                                </div>
+                            </div>
 
-  function openModal(c) {
-    mTitle.textContent = c.title;
-    mText.innerHTML = c.text;
-    mCta.textContent = c.cta;
-    lastFocus = document.activeElement;
-    modal.hidden = false;
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => mCta.focus());
-  }
+                            <div class="bg-white rounded-xl border border-slate-100 p-5">
+                                <div class="flex items-baseline justify-between gap-4 mb-3">
+                                    <div class="font-bold text-elal-navy">הליך מורכב</div>
+                                    <div class="text-3xl font-extrabold text-amsalem-teal">$85</div>
+                                </div>
+                                <div class="h-1.5 rounded-full bg-slate-100">
+                                    <div class="h-full rounded-full bg-amsalem-teal" style="width:100%"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-  function closeModal() {
-    modal.hidden = true;
-    document.body.style.overflow = '';
-    if(lastFocus) lastFocus.focus();
-  }
+                </div>
+            </div>
 
-  document.querySelectorAll('.btn-submit:not(.modal-cta)').forEach(b => {
-    b.addEventListener('click', () => {
-      const c = buildContent();
-      const original = b.innerHTML;
-      b.style.pointerEvents = 'none'; 
-      b.style.opacity = '.85';
-      b.innerHTML = c.load;
-      setTimeout(() => {
-        b.innerHTML = original; 
-        b.style.pointerEvents = ''; 
-        b.style.opacity = '';
-        openModal(c);
-      }, 850);
-    });
-  });
+            <!-- 2. התמורה לאל על -->
+            <div class="mb-16">
+                <div class="flex items-center gap-4 mb-8">
+                    <span class="w-10 h-10 shrink-0 rounded-xl bg-elal-navy text-white font-bold flex items-center justify-center">2</span>
+                    <h3 class="text-2xl font-bold text-elal-navy">התמורה לאל על</h3>
+                </div>
 
-  document.getElementById('modal-close').addEventListener('click', closeModal);
-  document.getElementById('modal-dismiss').addEventListener('click', closeModal);
+                <p class="text-slate-600 leading-relaxed mb-8 max-w-3xl">
+                    אל על זכאית לעמלה המחושבת על בסיס היקף המכירות המצטבר בכל שנת התקשרות, בתוספת מע״מ כדין. העמלה מחושבת באופן מדורג.
+                </p>
 
-  // Update CTA to show it's a demo instead of just closing
-  mCta.addEventListener('click', (e) => {
-    e.preventDefault();
-    const originalText = mCta.textContent;
-    mCta.textContent = 'כפתור דמו בלבד';
-    setTimeout(() => {
-      mCta.textContent = originalText;
-    }, 1500);
-  });
-  
-  modal.addEventListener('click', e => { if (e.target === modal) closeModal(); });
-  addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
-</script>
+                <div class="rounded-2xl border border-slate-200 overflow-hidden shadow-soft bg-white">
+                    <div class="hidden md:grid grid-cols-12 bg-elal-navy text-white text-sm font-bold px-8 py-4">
+                        <div class="col-span-5">מדרגת מכירות בשנת התקשרות</div>
+                        <div class="col-span-5">היקף יחסי</div>
+                        <div class="col-span-2 text-left">שיעור עמלה</div>
+                    </div>
+
+                    <!-- מדרגה א -->
+                    <div class="grid grid-cols-12 items-center px-6 md:px-8 py-4 border-b border-slate-100 hover:bg-slate-50 transition">
+                        <div class="col-span-8 md:col-span-5 font-medium text-elal-navy">עד $1,000,000</div>
+                        <div class="hidden md:block col-span-5 pl-8">
+                            <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                                <div class="tier-bar h-full rounded-full bg-elal-blue" style="width:44%"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-2 text-left text-xl font-extrabold text-elal-blue">2%</div>
+                    </div>
+
+                    <!-- מדרגה ב -->
+                    <div class="grid grid-cols-12 items-center px-6 md:px-8 py-4 border-b border-slate-100 hover:bg-slate-50 transition">
+                        <div class="col-span-8 md:col-span-5 font-medium text-elal-navy">$1,000,001 – $2,000,000</div>
+                        <div class="hidden md:block col-span-5 pl-8">
+                            <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                                <div class="tier-bar h-full rounded-full bg-elal-blue" style="width:55%"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-2 text-left text-xl font-extrabold text-elal-blue">2.5%</div>
+                    </div>
+
+                    <!-- מדרגה ג -->
+                    <div class="grid grid-cols-12 items-center px-6 md:px-8 py-4 border-b border-slate-100 hover:bg-slate-50 transition">
+                        <div class="col-span-8 md:col-span-5 font-medium text-elal-navy">$2,000,001 – $3,000,000</div>
+                        <div class="hidden md:block col-span-5 pl-8">
+                            <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                                <div class="tier-bar h-full rounded-full bg-elal-blue" style="width:66%"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-2 text-left text-xl font-extrabold text-elal-blue">3%</div>
+                    </div>
+
+                    <!-- מדרגה ד -->
+                    <div class="grid grid-cols-12 items-center px-6 md:px-8 py-4 border-b border-slate-100 hover:bg-slate-50 transition">
+                        <div class="col-span-8 md:col-span-5 font-medium text-elal-navy">$3,000,001 – $4,000,000</div>
+                        <div class="hidden md:block col-span-5 pl-8">
+                            <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                                <div class="tier-bar h-full rounded-full bg-elal-blue" style="width:77%"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-2 text-left text-xl font-extrabold text-elal-blue">3.5%</div>
+                    </div>
+
+                    <!-- מדרגה ה -->
+                    <div class="grid grid-cols-12 items-center px-6 md:px-8 py-4 border-b border-slate-100 hover:bg-slate-50 transition">
+                        <div class="col-span-8 md:col-span-5 font-medium text-elal-navy">$4,000,001 – $5,000,000</div>
+                        <div class="hidden md:block col-span-5 pl-8">
+                            <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                                <div class="tier-bar h-full rounded-full bg-elal-blue" style="width:88%"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-2 text-left text-xl font-extrabold text-elal-blue">4%</div>
+                    </div>
+
+                    <!-- מדרגה ו -->
+                    <div class="grid grid-cols-12 items-center px-6 md:px-8 py-5 bg-slate-50/60 hover:bg-slate-50 transition">
+                        <div class="col-span-8 md:col-span-5 font-bold text-elal-navy">$5,000,001 ומעלה</div>
+                        <div class="hidden md:block col-span-5 pl-8">
+                            <div class="h-2 rounded-full bg-slate-100 overflow-hidden">
+                                <div class="tier-bar h-full rounded-full bg-amsalem-teal" style="width:100%"></div>
+                            </div>
+                        </div>
+                        <div class="col-span-4 md:col-span-2 text-left text-2xl font-extrabold text-amsalem-teal">4.5%</div>
+                    </div>
+                </div>
+
+                <div class="mt-6 flex items-start gap-3 rounded-xl bg-elal-light/60 border border-blue-100 p-5">
+                    <svg class="w-5 h-5 shrink-0 mt-0.5 text-elal-blue" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <p class="text-sm text-slate-600 leading-relaxed">
+                        <strong class="text-elal-navy">חישוב מדורג בלבד.</strong> כל שיעור עמלה חל רק על חלק המכירות המצוי במדרגה הרלוונטית. מעבר למדרגה גבוהה יותר אינו מחיל את השיעור החדש באופן רטרואקטיבי על מכירות שנכללו במדרגות קודמות.
+                    </p>
+                </div>
+            </div>
+
+            <!-- 3+4. סליקה ותקופת ההתקשרות -->
+            <div class="grid md:grid-cols-2 gap-8">
+
+                <!-- סליקה והתחשבנות -->
+                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8 md:p-10">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="w-10 h-10 shrink-0 rounded-xl bg-elal-navy text-white font-bold flex items-center justify-center">3</span>
+                        <h3 class="text-2xl font-bold text-elal-navy">סליקה והתחשבנות</h3>
+                    </div>
+
+                    <ol class="space-y-6 relative">
+                        <li class="flex gap-4">
+                            <div class="shrink-0 w-2 h-2 rounded-full bg-elal-blue mt-2"></div>
+                            <div>
+                                <div class="font-bold text-elal-navy mb-1">סליקה במערך של אל על</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">כלל העסקאות נסלקות באמצעות מערך הסליקה של אל על.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="shrink-0 w-2 h-2 rounded-full bg-elal-blue mt-2"></div>
+                            <div>
+                                <div class="font-bold text-elal-navy mb-1">העברת נטו לאמסלם</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">אל על מעבירה את הסכום שהתקבל בפועל מחברת האשראי, בניכוי עמלת סליקה בשיעור <strong class="text-elal-navy">0.5%</strong> מסכום העסקאות.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="shrink-0 w-2 h-2 rounded-full bg-elal-blue mt-2"></div>
+                            <div>
+                                <div class="font-bold text-elal-navy mb-1">תוך 7 ימים</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">העברת הכספים מתבצעת בתוך שבעה ימים ממועד קבלתם בפועל אצל אל על.</p>
+                            </div>
+                        </li>
+                        <li class="flex gap-4">
+                            <div class="shrink-0 w-2 h-2 rounded-full bg-amsalem-teal mt-2"></div>
+                            <div>
+                                <div class="font-bold text-elal-navy mb-1">התחשבנות רבעונית וקיזוז</div>
+                                <p class="text-sm text-slate-600 leading-relaxed">ההתחשבנות על עמלת אל על נערכת אחת לרבעון, על בסיס המכירות המצטברות מתחילת שנת ההתקשרות. סכום העמלה מקוזז מהסכומים המועברים לאמסלם.</p>
+                            </div>
+                        </li>
+                    </ol>
+                </div>
+
+                <!-- תקופת ההתקשרות -->
+                <div class="rounded-2xl bg-slate-50 border border-slate-100 p-8 md:p-10">
+                    <div class="flex items-center gap-4 mb-8">
+                        <span class="w-10 h-10 shrink-0 rounded-xl bg-elal-navy text-white font-bold flex items-center justify-center">4</span>
+                        <h3 class="text-2xl font-bold text-elal-navy">תקופת ההתקשרות</h3>
+                    </div>
+
+                    <div class="bg-white rounded-2xl border border-slate-100 p-6 mb-6 text-center">
+                        <div class="text-5xl font-extrabold text-elal-navy leading-none">3</div>
+                        <div class="text-sm font-medium text-slate-500 mt-2">שנים ממועד הפעלת השירות</div>
+                    </div>
+
+                    <ul class="space-y-3 text-sm text-slate-600">
+                        <li class="flex items-start gap-3"><div class="mt-1.5 w-2 h-2 rounded-full bg-elal-blue shrink-0"></div>כל תקופה רצופה של 365 ימים ממועד כניסת ההסכם לתוקף נחשבת שנת התקשרות נפרדת לצורך חישוב המדרגות.</li>
+                        <li class="flex items-start gap-3"><div class="mt-1.5 w-2 h-2 rounded-full bg-elal-blue shrink-0"></div>בתחילת כל שנת התקשרות היקף המכירות המצטבר מתאפס והחישוב מתחיל מחדש.</li>
+                        <li class="flex items-start gap-3"><div class="mt-1.5 w-2 h-2 rounded-full bg-amsalem-teal shrink-0"></div>מכירות שנצברו בשנת התקשרות אחת אינן מועברות לשנה שלאחריה לצורך חישוב המדרגות.</li>
+                    </ul>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-20 relative bg-slate-50">
+        <div class="max-w-6xl mx-auto px-6">
+            
+            <div class="mb-14 max-w-3xl">
+                <div class="inline-block border-b-4 border-elal-blue pb-2 mb-4">
+                    <h2 class="text-3xl font-bold text-elal-navy">הערך של אל על</h2>
+                </div>
+                <p class="text-lg text-slate-600 leading-relaxed mt-4">
+                    לקוחות שמגיעים לשדה ללא ויזה מתאימה מפנים את התסכול ואת הציפייה לפתרון כלפי צוות אל על. 
+                    השירות נועד להוריד את הלחץ מדלפקי הצ׳ק-אין, לצמצם עומסים בזמן אמת, ולהפוך בעיה תפעולית להזדמנות עסקית המייצרת הכנסה משלימה מאותו לקוח, ללא השקעה בתשתית חדשה.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="p-8 rounded-2xl bg-white border border-slate-100 hover:shadow-glow transition duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-blue-100 text-elal-blue flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 10h4.764a2 2 0 011.789 2.894l-3.5 7A2 2 0 0115.263 21h-4.017c-.163 0-.326-.02-.485-.06L7 20m7-10V5a2 2 0 00-2-2h-.095c-.5 0-.905.405-.905.905 0 .714-.211 1.412-.608 2.006L7 11v9m7-10h-2M7 20H5a2 2 0 01-2-2v-6a2 2 0 012-2h2.5"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-elal-navy mb-3">ערך שירותי</h3>
+                    <p class="text-slate-600">הפחתת מקרים בהם נוסעים מגיעים ללא מסמכים, צמצום הפתעות בשדה, מתן כתובת מקצועית ושיפור חוויית השירות.</p>
+                </div>
+
+                <!-- ערך תפעולי -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-100 hover:shadow-glow transition duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-teal-100 text-amsalem-teal flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-elal-navy mb-3">ערך תפעולי</h3>
+                    <p class="text-slate-600">כתובת מקצועית המאפשרת לנציגי אל על להפנות לקוחות עם שאלות מורכבות במקום לנסות לפרש בעצמם דרישות כניסה.</p>
+                </div>
+
+                <!-- ערך שיווקי -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-100 hover:shadow-glow transition duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-indigo-100 text-indigo-600 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-elal-navy mb-3">ערך שיווקי</h3>
+                    <p class="text-slate-600">חיזוק המותג כמלווה את הנוסע לאורך כל הדרך. המסר השיווקי מול הלקוח: <strong>"אל על דואגת שתגיעו מוכנים"</strong>.</p>
+                </div>
+                <!-- ערך כלכלי ישיר -->
+                <div class="p-8 rounded-2xl bg-white border border-slate-100 hover:shadow-glow transition duration-300">
+                    <div class="w-12 h-12 rounded-xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-6">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-elal-navy mb-3">ערך כלכלי ישיר</h3>
+                    <p class="text-slate-600">צמצום מקרי No-Show עקב היעדר אשרה: מושב שנותר ריק, עלויות טיפול בנוסע שלא עלה, חשיפה לקנסות בגין סירוב כניסה ביעד.</p>
+                </div>
+            </div>
+
+            <!-- מועדון הנוסע המתמיד -->
+            <div class="mt-6 p-8 md:p-10 rounded-2xl bg-white border border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-2 h-full bg-amsalem-teal"></div>
+                <h3 class="text-2xl font-bold text-elal-navy mb-6 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-amsalem-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                    מועדון הנוסע המתמיד
+                </h3>
+                <ul class="grid sm:grid-cols-2 gap-x-10 gap-y-4">
+                    <li class="flex items-start gap-3 text-slate-600"><div class="mt-2 w-2 h-2 rounded-full bg-elal-blue shrink-0"></div>צבירת נקודות עבור רכישת שירות ויזה</li>
+                    <li class="flex items-start gap-3 text-slate-600"><div class="mt-2 w-2 h-2 rounded-full bg-elal-blue shrink-0"></div>מימוש נקודות עבור שירותים</li>
+                    <li class="flex items-start gap-3 text-slate-600"><div class="mt-2 w-2 h-2 rounded-full bg-elal-blue shrink-0"></div>הנחה בלעדית לחברי המועדון</li>
+                    <li class="flex items-start gap-3 text-slate-600"><div class="mt-2 w-2 h-2 rounded-full bg-elal-blue shrink-0"></div>טיפול מועדף ומהיר לבעלי מעמד</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-6 grid md:grid-cols-2 gap-8 items-start">
+
+            <!-- אבטחת מידע ופרטיות -->
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-2 h-full bg-amsalem-teal"></div>
+                <h2 class="text-xl font-bold text-elal-navy mb-2 flex items-center gap-3">
+                    <svg class="w-6 h-6 text-amsalem-teal shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M12 3l7 4v5c0 4.418-2.98 8.166-7 9-4.02-.834-7-4.582-7-9V7l7-4z"></path></svg>
+                    אבטחת מידע ופרטיות
+                </h2>
+                <p class="text-sm text-slate-500 mb-6 leading-relaxed">
+                    השירות מטפל במסמכי זיהוי ובמידע אישי של נוסעי אל על. המסגרת שתיקבע בין הצדדים תכלול:
+                </p>
+                <ul class="space-y-4 text-sm">
+                    <li>
+                        <div class="font-bold text-elal-navy mb-1">הסכם עיבוד נתונים</div>
+                        <p class="text-slate-500 leading-relaxed">אמסלם פועלת כמעבדת מידע מטעם אל על, בהתאם להסכם עיבוד נתונים ייעודי שייחתם בין הצדדים.</p>
+                    </li>
+                    <li>
+                        <div class="font-bold text-elal-navy mb-1">הצפנה ואחסון</div>
+                        <p class="text-slate-500 leading-relaxed">מסמכי הנוסעים נשמרים בסביבה מוצפנת, בהעברה ובאחסון.</p>
+                    </li>
+                    <li>
+                        <div class="font-bold text-elal-navy mb-1">הרשאות גישה מבוססות תפקיד</div>
+                        <p class="text-slate-500 leading-relaxed">גישה למסמכים מוגבלת לצוות המטפל בבקשה בלבד, עם תיעוד גישה.</p>
+                    </li>
+                    <li>
+                        <div class="font-bold text-elal-navy mb-1">שמירה ומחיקה</div>
+                        <p class="text-slate-500 leading-relaxed">תקופת שמירה מוגדרת מראש, ובסיומה מחיקת המסמכים.</p>
+                    </li>
+                    <li>
+                        <div class="font-bold text-elal-navy mb-1">העברה לצדדים שלישיים</div>
+                        <p class="text-slate-500 leading-relaxed">מידע מועבר לרשויות ולנציגויות מדינת היעד לצורך הגשת הבקשה בלבד.</p>
+                    </li>
+                    <li>
+                        <div class="font-bold text-elal-navy mb-1">ציות רגולטורי ודיווח אירועים</div>
+                        <p class="text-slate-500 leading-relaxed">עמידה בחוק הגנת הפרטיות ובתקנות אבטחת מידע, לנוסעים מהאיחוד האירופי גם בעקרונות ה-GDPR, לצד נוהל דיווח לאל על על אירוע אבטחת מידע.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bg-slate-50 p-8 rounded-2xl border border-slate-100">
+                <h2 class="text-xl font-bold text-slate-700 mb-4">אחריות משפטית והבהרות</h2>
+                <ul class="space-y-2 text-sm text-slate-500">
+                    <li>• האחריות למסירת מידע נכון ומלא היא של הלקוח.</li>
+                    <li>• ההחלטה הסופית לגבי מתן אישור כניסה היא של מדינת היעד.</li>
+                    <li>• לא ניתן להבטיח מראש את אישור הבקשה.</li>
+                    <li>• האחריות להגעה עם מסמכים תקפים נשארת בידי הנוסע.</li>
+                    <li>• אמסלם אחראית לטיפול המקצועי בהתאם להנחיות ולחוקי הגנת הפרטיות (אבטחת מידע).</li>
+                    <li>• יוגדרו כללים ברורים לביטול ולהחזר.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <footer class="bg-slate-900 text-white py-12 border-t-4 border-amsalem-teal">
+        <div class="max-w-6xl mx-auto px-6">
+            <div class="flex justify-center items-center gap-8 border-b border-slate-800 pb-8 mb-8">
+                <div class="flex items-center gap-6">
+                    <img src="Amsalem_Logo.png (2).png" alt="לוגו קבוצת אמסלם" class="h-8 brightness-0 invert opacity-60">
+                </div>
+            </div>
+            
+            <div class="text-center text-slate-400 text-sm max-w-2xl mx-auto leading-relaxed">
+                <p>
+                    מדובר במוצר משלים בעל פוטנציאל להכנסה נוספת מכל לקוח, ללא צורך שאל על תקים בעצמה מחלקת ויזות או מערך תפעולי חדש. אל על ויזות מאפשרת להרחיב את מערכת היחסים עם הלקוח, לחזק את מועדון הנוסע המתמיד ולמצב את אל על כחברה שמלווה את הנוסע לאורך כל הדרך מהזמנת הטיסה ועד הכניסה ליעד.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // חשיפה הדרגתית של מדרגות העמלה בגלילה
+        (function () {
+            var bars = document.querySelectorAll('.tier-bar');
+            if (!bars.length) return;
+
+            var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+            if (reduce || !('IntersectionObserver' in window)) return;
+
+            bars.forEach(function (bar) {
+                bar.dataset.width = bar.style.width;
+                bar.style.width = '0%';
+            });
+
+            var observer = new IntersectionObserver(function (entries) {
+                entries.forEach(function (entry) {
+                    if (!entry.isIntersecting) return;
+                    var bar = entry.target;
+                    setTimeout(function () {
+                        bar.style.width = bar.dataset.width;
+                    }, 80);
+                    observer.unobserve(bar);
+                });
+            }, { threshold: 0.4 });
+
+            bars.forEach(function (bar) { observer.observe(bar); });
+        })();
+    </script>
+
 </body>
 </html>
